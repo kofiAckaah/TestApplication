@@ -1,0 +1,20 @@
+﻿CREATE PROCEDURE GetEmployeePayInfo
+    @EmployeeId INT
+AS
+BEGIN
+    SELECT 
+        e.id AS EmployeeId,
+        e.name AS EmployeeName,
+        ep.salary AS Salary,
+        ep.payDate AS PayDate
+    FROM 
+        EmployeeTable e
+    INNER JOIN 
+        EmployeeContracts ec ON e.id = ec.employeeId
+    INNER JOIN 
+        EmployeePayTable ep ON ec.id = ep.contractId
+    WHERE 
+        e.id = @EmployeeId
+    ORDER BY 
+        ep.payDate DESC;
+END
